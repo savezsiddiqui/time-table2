@@ -46,6 +46,7 @@ class FormComponent extends Component {
 
         console.log(mySchedule)
         window.localStorage.setItem('schedule', JSON.stringify(mySchedule))
+        window.location.reload()
     }
 
     render() {

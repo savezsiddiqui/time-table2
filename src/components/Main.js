@@ -28,6 +28,11 @@ class Main extends Component {
         })
     }
 
+    Reset() {
+        window.localStorage.removeItem('schedule')
+        window.location.reload()
+    }
+
     render() {
 
         const { schedule, subjectCode } = this.props
@@ -71,6 +76,11 @@ class Main extends Component {
                                 onClick={() => this.onClickRight()}
                             >Right</Button>
                         </ButtonGroup>
+                    </Col>
+                    <Col xs={12}>
+                        <Button
+                            style={{ border: 0, marginTop: 50, textDecoration: 'underline' }}
+                            onClick={() => this.Reset()}>Reset</Button>
                     </Col>
                 </Row>
             </Container>
