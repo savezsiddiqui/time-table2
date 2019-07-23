@@ -1,6 +1,20 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@font-face {
+  font-family: 'OPERATOR MONO';
+  font-style: normal;
+  font-weight: normal;
+  src: local('OPERATOR MONO'), url('%PUBLIC_URL%/ Mono Medium Italic.otf') format('otf');
+}
+
 body {
   background: #212121;
   color: white;
-  font-family: 'Montserrat'
+  font-family: 'OPERATOR MONO'
+}
+
+.form-control, .form-control:hover, .form-control:focus, .btn, .btn:hover, .btn:focus {
+  color: white;
+  background: #212121;
+  border: 1px solid white;
+  margin: 5px;
+  outline: 0;
 }
