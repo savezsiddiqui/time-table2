@@ -1,16 +1,27 @@
 import React from 'react'
 import Main from './components/Main'
-import schedule from './data/myclasses.json'
-import myclasses from './data/classes.json'
+import Form from './components/Form'
+import subjectCode from './data/subjectCode.json'
 import './App.css'
 
 function App() {
-  return (
-    <Main
-      schedule={schedule}
-      myclasses={myclasses}
-    />
-  )
+
+  const schedule = JSON.parse(window.localStorage.getItem('schedule'))
+
+  if (schedule === null) {
+    return (
+      <Form />
+    )
+  }
+  else {
+    return (
+      <Main
+        schedule={schedule}
+        subjectCode={subjectCode}
+      />
+    )
+  }
+
 }
 
 export default App

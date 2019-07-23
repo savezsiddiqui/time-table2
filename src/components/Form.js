@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Row, Col, Container } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form'
+import Schedule from '../data/schedule.json'
 
 const required = (val) => val && val.length
 const maxLength = (len) => (val) => !(val) || (val.length <= len)
@@ -10,9 +11,41 @@ const isNumber = (val) => !isNaN(Number(val))
 class FormComponent extends Component {
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values))
-        alert('Current State is: ' + JSON.stringify(values))
-        // event.preventDefault()
+
+        console.log(values)
+
+        const batch = values.batch
+        const CS_elective = values.CS_elective
+        const HSS_elective = values.HSS_elective
+        const elective = values.Other_elective
+
+        const batchRegex = batch.length == 2 ?
+            '(' + batch + '|' + 'LAB\\(' + '|' + batch[0] + '[1-' + batch[1] +
+            ']-([' + batch[1] + '-9]|1\\d))'
+            : '(' + batch + '|' + 'LAB\\(' + '|' + batch[0] + '.*(1[0-' + batch[2] +
+            ']-1[' + batch[2] + '-4]|,' + batch.slice(1, 3) + ')' + ')'
+
+        const CS_elect_lab = CS_elective === 'CI514' ? 'CI574' : 'CI573'
+        const compulsory = 'CI511|CI571|CI575|CI576'
+        const regex = new RegExp(batchRegex + ".*(" + HSS_elective + '|' + elective + '|'
+            + CS_elective + '|' + CS_elect_lab + '|' + compulsory + ')')
+        console.log(regex)
+
+        const mySchedule = Schedule.map(item => {
+            let newObject = {}
+            Object.keys(item).forEach((key, index) => {
+
+                if (index === 0)
+                    newObject[key] = item[key]
+                else
+                    newObject[key] = item[key].filter(element => element.match(regex))
+            });
+
+            return newObject
+        })
+
+        console.log(mySchedule)
+        window.localStorage.setItem('schedule', JSON.stringify(mySchedule))
     }
 
     render() {

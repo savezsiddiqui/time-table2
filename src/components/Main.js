@@ -30,7 +30,7 @@ class Main extends Component {
 
     render() {
 
-        const { schedule, myclasses } = this.props
+        const { schedule, subjectCode } = this.props
         const item = schedule[this.state.index]
         let RenderData = []
 
@@ -40,7 +40,7 @@ class Main extends Component {
 
                     let str = item[key][0]
                     let time = key
-                    let subject = myclasses[str.slice(str.indexOf('(') + 1,
+                    let subject = subjectCode[str.slice(str.indexOf('(') + 1,
                         str.indexOf(')'))]
                     let location = str.slice(str.indexOf(')') + 2, str.indexOf('/'))
 
