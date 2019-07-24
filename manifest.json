@@ -54,7 +54,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "/time-table2",
   "display": "fullscreen",
   "theme_color": "#212121",
   "background_color": "#212121"
