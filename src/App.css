@@ -1,14 +1,9 @@
-@font-face {
-  font-family: 'OPERATOR MONO';
-  font-style: normal;
-  font-weight: normal;
-  src: local('OPERATOR MONO'), url('%PUBLIC_URL%/ Mono Medium Italic.otf') format('otf');
-}
-
+@import url('https://fonts.googleapis.com/css?family=Darker+Grotesque:900&display=swap');
 body {
   background: #212121;
   color: white;
-  font-family: 'OPERATOR MONO'
+  font-size: 21px;
+  font-family: 'Darker Grotesque'
 }
 
 .form-control, .form-control:hover, .form-control:focus, .btn, .btn:hover, .btn:focus {

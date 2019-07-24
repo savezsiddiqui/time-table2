@@ -2,11 +2,15 @@
   "name": "time-table",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://savezsiddiqui.github.io/time-table2",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "gh-pages": "^2.0.1",
+    "http-server": "^0.11.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",
+    "react-flip-page": "^1.5.7",
     "react-redux": "^7.1.0",
     "react-redux-form": "^1.16.14",
     "react-scripts": "3.0.1",
@@ -14,9 +18,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-sw": "http-server ./build"
   },
   "eslintConfig": {
     "extends": "react-app"

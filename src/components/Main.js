@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, ButtonGroup, Button, Col } from 'react-bootstrap'
+import FlipPage from 'react-flip-page'
 
 const Card = ({ subject, location, time }) => {
     return (
@@ -14,6 +15,12 @@ class Main extends Component {
 
     state = {
         index: 0,
+    }
+
+    onPageChange = (index, direction) => {
+        this.setState({
+            index
+        })
     }
 
     onClickLeft() {
@@ -44,29 +51,53 @@ class Main extends Component {
                 if (index > 0 && item[key].length > 0) {
 
                     let str = item[key][0]
-                    let time = key
+                    let time = ''
                     let subject = subjectCode[str.slice(str.indexOf('(') + 1,
                         str.indexOf(')'))]
                     let location = str.slice(str.indexOf(')') + 2, str.indexOf('/'))
 
+                    if (subject.endsWith('Lab')) {
+                        let time1 = parseInt(key.slice(0, key.indexOf('-')))
+                        time = time1 + '-' + (time1 + 1) + ':50' + key.slice(key.length - 2, key.length)
+                    }
+                    else
+                        time = key
                     RenderData.push({ time, subject, location })
                 }
             })
-
+        console.log(RenderData)
         const CardRender = RenderData.map(item => {
             return <Card
                 subject={item.subject}
+                style={{ height: 300, width: 100 }}
                 location={item.location}
                 time={item.time} />
         })
 
         return (
-            <Container className='text-center'>
+
+            <Container fluid className='text-center'>
                 <Row>
                     <Col xs={12}>
-                        <h2>{schedule[this.state.index].day}</h2>
+                        <h2 className='mt-4'>{schedule[this.state.index].day}</h2>
                     </Col>
-                    {CardRender}
+                    <div className="flip-root mb-2" style={{ margin: 'auto' }}>
+                        <FlipPage
+                            orientation='horizontal'
+                            responsive={true}
+                            loopForever={true}
+                            onPageChange={this.onPageChange}
+                            animationDuration={300}
+                            startAt={0}
+                        >
+                            <div className="card_list">{CardRender}</div>
+                            <div className="card_list">{CardRender}</div>
+                            <div className="card_list">{CardRender}</div>
+                            <div className="card_list">{CardRender}</div>
+                            <div className="card_list">{CardRender}</div>
+                            <div className="card_list">{CardRender}</div>
+                        </FlipPage>
+                    </div>
                     <Col xs={12}>
                         <ButtonGroup>
                             <Button variant="secondary"
@@ -83,7 +114,7 @@ class Main extends Component {
                             onClick={() => this.Reset()}>Reset</Button>
                     </Col>
                 </Row>
-            </Container>
+            </Container >
         )
     }
 }
