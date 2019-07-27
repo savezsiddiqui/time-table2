@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import { Button, Row, Col, Container } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form'
 import Schedule from '../data/schedule.json'
+import subjectCode from '../data/subjectCode.json'
 
-const required = (val) => val && val.length
-const maxLength = (len) => (val) => !(val) || (val.length <= len)
-const minLength = (len) => (val) => val && (val.length >= len)
-const isNumber = (val) => !isNaN(Number(val))
+const required = (val) => val && val.length 
+const regex = (val) => val && val.match(/[A-Z]\d{1,2}$/)
+
+const Option = ({ name, code }) => {
+    return (
+        <option value={code}>{name}</option>
+    )
+}
 
 class FormComponent extends Component {
 
@@ -50,6 +55,16 @@ class FormComponent extends Component {
     }
 
     render() {
+
+        let HSS_subjects = []
+        let Other_subjects = []
+        Object.keys(subjectCode).forEach(key => {
+            if (key.includes('HS'))
+                HSS_subjects.push({ name: subjectCode[key], code: key })
+            if (key.includes('MA') || key.includes('PH'))
+                Other_subjects.push({ name: subjectCode[key], code: key })
+        })
+
         return (
             <Container>
                 <Row className='justify-content-center' >
@@ -59,7 +74,14 @@ class FormComponent extends Component {
                                 <h2><b>LETS START</b></h2>
                             </Col>
                             <Col xs={12} className='mt-4'>
-                                <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                                <LocalForm
+                                    onSubmit={(values) => this.handleSubmit(values)}
+                                    initialState={{
+                                        batch: '',
+                                        CS_elective: 'CI514',
+                                        HSS_elective: '16HS531',
+                                        Other_elective: '16MA531',
+                                    }}>
                                     <Row className="form-group">
                                         <Col xs={12}>
                                             <Control.text model=".batch"
@@ -67,7 +89,7 @@ class FormComponent extends Component {
                                                 placeholder="batch"
                                                 className="form-control"
                                                 validators={{
-                                                    required
+                                                    required, regex
                                                 }}
                                             />
                                             <Errors
@@ -76,6 +98,7 @@ class FormComponent extends Component {
                                                 show="touched"
                                                 messages={{
                                                     required: 'Required',
+                                                    regex: 'Incorrect Format'
                                                 }}
                                             />
                                         </Col>
@@ -83,64 +106,38 @@ class FormComponent extends Component {
 
                                     <Row className="form-group">
                                         <Col xs={12}>
-                                            <Control.text model=".CS_elective"
-                                                id="CS_elective" name="CS_elective"
-                                                placeholder="CS_elective"
-                                                className="form-control"
-                                                validators={{
-                                                    required
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".CS_elective"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required',
-                                                }}
-                                            />
+                                            <Control.select model=".CS_elective" id="CS_elective"
+                                                name="CS_elective" className="form-control"
+                                            >
+                                                <option value='CI514'>Artificial Intelligence</option>
+                                                <option value='CI513'>Software Engineering</option>
+                                            </Control.select>
                                         </Col>
                                     </Row>
 
                                     <Row className="form-group">
                                         <Col xs={12}>
-                                            <Control.text model=".HSS_elective"
+                                            <Control.select model=".HSS_elective"
                                                 id="HSS_elective" name="HSS_elective"
-                                                placeholder="HSS_elective"
                                                 className="form-control"
-                                                validators={{
-                                                    required
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".HSS_elective"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required',
-                                                }}
-                                            />
+                                            >
+                                                {HSS_subjects.map(item => {
+                                                    return <Option name={item.name}
+                                                        code={item.code} key={item.code} />
+                                                })}
+                                            </Control.select>
                                         </Col>
                                     </Row>
 
                                     <Row className="form-group">
                                         <Col xs={12}>
-                                            <Control.text model=".Other_elective"
+                                            <Control.select model=".Other_elective"
                                                 id="Other_elective" name="Other_elective"
-                                                placeholder="Maths/Physics Elective"
                                                 className="form-control"
-                                                validators={{
-                                                    required
-                                                }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".Other_elective"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required',
-                                                }}
-                                            />
+                                            >{Other_subjects.map(item => {
+                                                return <Option name={item.name}
+                                                    code={item.code} key={item.code} />
+                                            })}</Control.select>
                                         </Col>
                                     </Row>
 

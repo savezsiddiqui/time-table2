@@ -16,6 +16,12 @@ body {
   outline: 0;
 }
 
+.box {
+  background: green;
+  color: floralwhite;
+  box-shadow: 0 8px 16px 0 rgba(134, 80, 80, 0.2);
+}
+
 .fixed {
   position: absolute;
   bottom: 10px;

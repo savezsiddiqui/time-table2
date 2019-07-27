@@ -1,20 +1,37 @@
 import React, { Component } from 'react'
 import { Container, Row, ButtonGroup, Button, Col } from 'react-bootstrap'
 import FlipPage from 'react-flip-page'
+import moment from 'moment'
 
-const Card = ({ subject, location, time }) => {
-    return (
-        <Col xs={12}>
-            <p className='mb-0'>{subject}</p>
-            <p className='mt-0'>{time} | {location}</p>
-        </Col>
-    )
+const Card = ({ subject, location, time, index }) => {
+
+    let classHour = parseInt(time.slice(0, time.indexOf('-')))
+    let hour = parseInt(moment().format('h'))
+
+    if (index === moment().isoWeekday() - 1 && (hour === classHour) || 
+        subject.endsWith('Lab') && hour === classHour + 1) {
+        return (
+            <Col xs={12} className='box'>
+                <p className='mb-0'>{subject}</p>
+                <p className='mt-0'>{time} | {location}</p>
+            </Col>
+        )
+    }
+    else {
+        return (
+            <Col xs={12}>
+                <p className='mb-0'>{subject}</p>
+                <p className='mt-0'>{time} | {location}</p>
+            </Col>
+        )
+    }
+
 }
 
 class Main extends Component {
 
     state = {
-        index: 0,
+        index: moment().isoWeekday() === 7 ? 5 : moment().isoWeekday() - 1,
     }
 
     onPageChange = (index, direction) => {
@@ -65,13 +82,14 @@ class Main extends Component {
                     RenderData.push({ time, subject, location })
                 }
             })
-        console.log(RenderData)
+
         const CardRender = RenderData.map(item => {
             return <Card
                 subject={item.subject}
                 style={{ height: 300, width: 100 }}
                 location={item.location}
-                time={item.time} />
+                time={item.time}
+                index={this.state.index} />
         })
 
         return (
