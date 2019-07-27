@@ -76,7 +76,7 @@ class Main extends Component {
 
         return (
 
-            <Container fluid className='text-center'>
+            <Container fluid className='text-center my_container'>
                 <Row>
                     <Col xs={12}>
                         <h2 className='mt-4'>{schedule[this.state.index].day}</h2>
@@ -98,7 +98,7 @@ class Main extends Component {
                             <div className="card_list">{CardRender}</div>
                         </FlipPage>
                     </div>
-                    <Col xs={12}>
+                    {/* <Col xs={12}>
                         <ButtonGroup>
                             <Button variant="secondary"
                                 onClick={() => this.onClickLeft()}
@@ -107,13 +107,14 @@ class Main extends Component {
                                 onClick={() => this.onClickRight()}
                             >Right</Button>
                         </ButtonGroup>
-                    </Col>
-                    <Col xs={12}>
-                        <Button
-                            style={{ border: 0, marginTop: 50, textDecoration: 'underline' }}
-                            onClick={() => this.Reset()}>Reset</Button>
-                    </Col>
+                    </Col> */}
                 </Row>
+                <Button
+                    className='fixed'
+                    style={{ border: 0, textDecoration: 'underline' }}
+                    onClick={() => this.Reset()}
+                >Reset
+                </Button>
             </Container >
         )
     }
