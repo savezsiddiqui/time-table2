@@ -1,6 +1,7 @@
 {
   "short_name": "React App",
   "name": "React App",
+  "orientation": "Portrait",
   "icons": [
     {
       "src": "images/icons-512.png",
