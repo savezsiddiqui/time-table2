@@ -4,7 +4,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form'
 import Schedule from '../data/schedule.json'
 import subjectCode from '../data/subjectCode.json'
 
-const required = (val) => val && val.length 
+const required = (val) => val && val.length
 const regex = (val) => val && val.match(/[A-Z]\d{1,2}$/)
 
 const Option = ({ name, code }) => {
@@ -25,10 +25,11 @@ class FormComponent extends Component {
         const elective = values.Other_elective
 
         const batchRegex = batch.length == 2 ?
-            '(' + batch + '|' + 'LAB\\(' + '|' + batch[0] + '[1-' + batch[1] +
-            ']-([' + batch[1] + '-9]|1\\d))'
-            : '(' + batch + '|' + 'LAB\\(' + '|' + batch[0] + '.*(1[0-' + batch[2] +
+            '(' + batch + '|' + 'LAB\\(' + '|LABC\\(' + '|' + batch[0] + '[1-' + batch[1] +
+            ']-([' + batch[1] + '-9]|1\\d)|' + batch[0] + '.*,' + batch[1] + ')'
+            : '(' + batch + '|' + 'LAB\\(' + '|LABC\\(' + '|' + batch[0] + '.*(1[0-' + batch[2] +
             ']-1[' + batch[2] + '-4]|,' + batch.slice(1, 3) + ')' + ')'
+
 
         const CS_elect_lab = CS_elective === 'CI514' ? 'CI574' : 'CI573'
         const compulsory = 'CI511|CI571|CI575|CI576'
